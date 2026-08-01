@@ -148,8 +148,14 @@
 
 <section id="gallery" class="gallery">
   <div class="head">
-    <p class="eyebrow" style="color:var(--ink)">Gallery</p>
-    <h2>Set the Scene</h2>
+    <div>
+      <p class="eyebrow" style="color:var(--ink)">Gallery</p>
+      <h2>Set the Scene</h2>
+    </div>
+    <div class="rail-nav">
+      <button class="rail-btn rail-prev" aria-label="Previous photos">&#8592;</button>
+      <button class="rail-btn rail-next" aria-label="Next photos">&#8594;</button>
+    </div>
   </div>
   <div class="rail" aria-label="Photo gallery">
     <div class="rail-track">
@@ -373,6 +379,10 @@ const secs=document.querySelectorAll('section[id],header.hero');
 const nls=document.querySelectorAll('.side-nav ul a');
 const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){nls.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-40% 0px -50% 0px'});
 secs.forEach(s=>sio.observe(s));
+// gallery arrows
+const rail=document.querySelector('.rail');
+document.querySelector('.rail-prev').addEventListener('click',()=>rail.scrollBy({left:-rail.clientWidth*.8,behavior:'smooth'}));
+document.querySelector('.rail-next').addEventListener('click',()=>rail.scrollBy({left:rail.clientWidth*.8,behavior:'smooth'}));
 </script>
 </body>
 </html>
