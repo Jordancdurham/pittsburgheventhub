@@ -106,6 +106,11 @@ h2{font-size:clamp(34px,4.6vw,58px);margin-bottom:22px}
 .rail img{height:320px;width:auto;border:4px solid var(--ink);object-fit:cover}
 @media(max-width:900px){.rail img{height:220px}}
 
+/* ---------- tour ---------- */
+.tour-media{display:flex;justify-content:center}
+.tour-media video{width:min(100%,400px);max-height:660px;object-fit:cover;border:4px solid var(--ink);box-shadow:12px 12px 0 var(--fuchsia);background:var(--ink)}
+@media(max-width:900px){.tour-media video{max-height:520px}}
+
 /* ---------- pricing ---------- */
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:44px}
 .price-card{border:3px solid var(--ink);background:var(--white);padding:38px 30px;position:relative;transition:transform .18s}
