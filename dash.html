@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Event Hub — SEO Backend</title>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"></noscript>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{min-height:100%}
+  body{font-family:'Inter',system-ui,sans-serif;background:#F2F3F3;color:#191A1A}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:40px;height:40px;border-radius:12px;background:#191A1A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
+  .brand h1{font-size:1.05rem;font-weight:700}
+  .brand .sub{font-size:.75rem;color:#6b6e70;font-weight:500}
+  .topbar .actions{display:flex;gap:10px}
+  .btn{border:0;border-radius:10px;padding:9px 16px;font:600 .8rem 'Inter',sans-serif;cursor:pointer;background:#191A1A;color:#fff}
+  .btn.ghost{background:#fff;color:#191A1A;border:1px solid #d9dbdc}
+  .btn:hover{opacity:.88}
+
+  /* stat tiles */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px}
+  .tile{background:#fff;border-radius:16px;padding:18px 18px 16px;box-shadow:0 1px 3px rgba(25,26,26,.06)}
+  .tile .num{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
+  .tile .lbl{font-size:.72rem;font-weight:600;color:#6b6e70;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+  /* cards */
+  .card{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(25,26,26,.06);padding:22px;margin-bottom:22px;overflow-x:auto}
+  .card h2{font-size:.95rem;font-weight:700;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:560px}
+  th{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#6b6e70;text-align:left;padding:8px 10px;border-bottom:1px solid #ececed}
+  td{padding:10px;border-bottom:1px solid #f2f3f3;vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  .badge{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px}
+  .badge.ok{background:#e5f6ee;color:#0d7a46}
+  .badge.wait{background:#fdf1dc;color:#9a6b0c}
+  .badge.err{background:#fde6e6;color:#b3261e}
+  .muted{color:#8a8d8f;font-size:.78rem}
+  .empty{color:#8a8d8f;font-size:.85rem;padding:12px 4px}
+
+  /* login */
+  .login{max-width:380px;margin:12vh auto 0;background:#fff;border-radius:20px;box-shadow:0 8px 30px rgba(25,26,26,.10);padding:34px}
+  .login .logo{width:46px;height:46px;border-radius:13px;background:#191A1A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px}
+  .login h1{font-size:1.15rem;margin-bottom:4px}
+  .login p{font-size:.82rem;color:#6b6e70;margin-bottom:20px}
+  .login label{display:block;font-size:.72rem;font-weight:600;color:#6b6e70;margin:14px 0 5px;text-transform:uppercase;letter-spacing:.05em}
+  .login input{width:100%;padding:11px 13px;border:1px solid #d9dbdc;border-radius:10px;font:400 .9rem 'Inter',sans-serif}
+  .login .btn{width:100%;margin-top:20px;padding:12px}
+  .login .err{color:#b3261e;font-size:.8rem;margin-top:12px;display:none}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div id="loginView" class="login hidden">
+  <div class="logo">EH</div>
+  <h1>Event Hub Backend</h1>
+  <p>Sign in with your dashboard account.</p>
+  <label for="email">Email</label>
+  <input id="email" type="email" autocomplete="email">
+  <label for="password">Password</label>
+  <input id="password" type="password" autocomplete="current-password">
+  <button id="loginBtn" class="btn">Sign In</button>
+  <div id="loginErr" class="err"></div>
+</div>
+
+<div id="dashView" class="wrap hidden">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">EH</div>
+      <div>
+        <h1>Pittsburgh Event Hub — SEO Backend</h1>
+        <div class="sub">pittsburgheventhub.com · auto-blog + Google Business engine</div>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="./" style="text-decoration:none">View Site</a>
+      <button id="refreshBtn" class="btn ghost">Refresh</button>
+      <button id="logoutBtn" class="btn">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="num" id="statPosts">–</div><div class="lbl">Posts Published</div></div>
+    <div class="tile"><div class="num" id="statQueue">–</div><div class="lbl">Topics Queued</div></div>
+    <div class="tile"><div class="num" id="statGbp">–</div><div class="lbl">GBP Posts</div></div>
+    <div class="tile"><div class="num" id="statLast" style="font-size:1.05rem;line-height:2.1rem">–</div><div class="lbl">Last Post</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Published Posts</h2>
+    <div id="postsTable"></div>
+  </div>
+
+  <div class="card">
+    <h2>Topic Queue <span class="muted">(the routine takes the top one each Mon &amp; Thu)</span></h2>
+    <div id="queueTable"></div>
+  </div>
+
+  <p class="muted">Powered by the Event Hub SEO Publisher routine. Data lives in Supabase (<code>eventhub_posts</code> / <code>eventhub_queue</code>).</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+<script>
+var sb = window.supabase.createClient(
+  'https://klscglvwwzpqozihephe.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtsc2NnbHZ3d3pwcW96aWhlcGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODQ2NDksImV4cCI6MjA4NzE2MDY0OX0.G8ogZTRvE7t9Is78YmI6-j4Uc449_WyRE61Z7Vz_PSA'
+);
+
+function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+function fmtDate(s){if(!s)return '—';var d=new Date(s);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+async function loadDash(){
+  var posts=(await sb.from('eventhub_posts').select('*').order('published_at',{ascending:false})).data||[];
+  var queue=(await sb.from('eventhub_queue').select('*').eq('status','queued').order('priority')).data||[];
+
+  document.getElementById('statPosts').textContent=posts.length;
+  document.getElementById('statQueue').textContent=queue.length;
+  document.getElementById('statGbp').textContent=posts.filter(function(p){return p.gbp_posted;}).length;
+  document.getElementById('statLast').textContent=posts.length?fmtDate(posts[0].published_at):'None yet';
+
+  var pt=document.getElementById('postsTable');
+  if(!posts.length){pt.innerHTML='<div class="empty">No posts yet — the routine publishes Mondays &amp; Thursdays at 9am.</div>';}
+  else{
+    pt.innerHTML='<table><tr><th>Title</th><th>Published</th><th>Keyword</th><th>Google Business</th></tr>'+posts.map(function(p){
+      return '<tr><td><a href="'+esc(p.url)+'" target="_blank" rel="noopener">'+esc(p.title)+'</a>'+(p.notes?'<div class="muted">'+esc(p.notes)+'</div>':'')+'</td>'+
+        '<td>'+fmtDate(p.published_at)+'</td><td class="muted">'+esc(p.keyword||'—')+'</td>'+
+        '<td>'+(p.gbp_posted?'<span class="badge ok">Posted '+fmtDate(p.gbp_posted_at)+'</span>':'<span class="badge err">Not posted</span>')+'</td></tr>';
+    }).join('')+'</table>';
+  }
+
+  var qt=document.getElementById('queueTable');
+  if(!queue.length){qt.innerHTML='<div class="empty">Queue is empty — the routine will invent its next topic automatically.</div>';}
+  else{
+    qt.innerHTML='<table><tr><th>#</th><th>Topic</th><th>Target keyword</th><th>Status</th></tr>'+queue.map(function(q,i){
+      return '<tr><td class="muted">'+(i+1)+'</td><td>'+esc(q.topic)+'</td><td class="muted">'+esc(q.keyword||'—')+'</td><td><span class="badge wait">queued</span></td></tr>';
+    }).join('')+'</table>';
+  }
+}
+
+function show(id){document.getElementById('loginView').classList.toggle('hidden',id!=='login');document.getElementById('dashView').classList.toggle('hidden',id!=='dash');}
+
+async function init(){
+  var sess=(await sb.auth.getSession()).data.session;
+  if(sess){show('dash');loadDash();}else{show('login');}
+}
+
+document.getElementById('loginBtn').addEventListener('click',async function(){
+  var err=document.getElementById('loginErr');err.style.display='none';
+  var res=await sb.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});
+  if(res.error){err.textContent=res.error.message;err.style.display='block';return;}
+  show('dash');loadDash();
+});
+document.getElementById('password').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginBtn').click();});
+document.getElementById('logoutBtn').addEventListener('click',async function(){await sb.auth.signOut();show('login');});
+document.getElementById('refreshBtn').addEventListener('click',loadDash);
+init();
+</script>
+</body>
+</html>
