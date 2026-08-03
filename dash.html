@@ -12,38 +12,107 @@
   html,body{min-height:100%}
   body{font-family:'Inter',system-ui,sans-serif;background:#F2F3F3;color:#191A1A}
   a{color:inherit}
-  .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px}
+  .wrap{max-width:1160px;margin:0 auto;padding:28px 20px 60px}
 
   /* top bar */
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:12px}
   .brand .logo{width:40px;height:40px;border-radius:12px;background:#191A1A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
   .brand h1{font-size:1.05rem;font-weight:700}
   .brand .sub{font-size:.75rem;color:#6b6e70;font-weight:500}
-  .topbar .actions{display:flex;gap:10px}
+  .topbar .actions{display:flex;gap:10px;flex-wrap:wrap}
   .btn{border:0;border-radius:10px;padding:9px 16px;font:600 .8rem 'Inter',sans-serif;cursor:pointer;background:#191A1A;color:#fff}
   .btn.ghost{background:#fff;color:#191A1A;border:1px solid #d9dbdc}
   .btn:hover{opacity:.88}
 
-  /* stat tiles */
-  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px}
-  .tile{background:#fff;border-radius:16px;padding:18px 18px 16px;box-shadow:0 1px 3px rgba(25,26,26,.06)}
-  .tile .num{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
-  .tile .lbl{font-size:.72rem;font-weight:600;color:#6b6e70;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
-
-  /* cards */
-  .card{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(25,26,26,.06);padding:22px;margin-bottom:22px;overflow-x:auto}
-  .card h2{font-size:.95rem;font-weight:700;margin-bottom:14px}
-  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:560px}
-  th{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#6b6e70;text-align:left;padding:8px 10px;border-bottom:1px solid #ececed}
-  td{padding:10px;border-bottom:1px solid #f2f3f3;vertical-align:top}
-  tr:last-child td{border-bottom:0}
-  .badge{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px}
-  .badge.ok{background:#e5f6ee;color:#0d7a46}
-  .badge.wait{background:#fdf1dc;color:#9a6b0c}
-  .badge.err{background:#fde6e6;color:#b3261e}
-  .muted{color:#8a8d8f;font-size:.78rem}
-  .empty{color:#8a8d8f;font-size:.85rem;padding:12px 4px}
+  /* ── SEO dashboard (ported from the POB dash SEO tab; scoped under #seoDash) ── */
+  #seoDash{--purple:#7257e8;--purple-ink:#5a40d4;--purple-tint:#ECE8FB;--purple-wash:#F6F4FD;--pink:#FF5DB6;--ink:#191622;--muted:#6e6a78;--subtle:#9a96a6;--faint:#c2bed0;--line:#ecebf2;--line2:#f3f2f8;--surface:#fff;--good:#1f9d57;--good-tint:#E6F6EC;--warn:#D99000;--warn-tint:#FBF1D7;--bad:#DC2626;--bad-tint:#FBEAEA;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;color:var(--ink);-webkit-font-smoothing:antialiased}
+  #seoDash .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px}
+  #seoDash .stat{background:var(--surface);border-radius:18px;padding:18px 20px;box-shadow:0 1px 3px rgba(30,20,60,.05)}
+  #seoDash .stat .lab{font-size:.68rem;font-weight:700;color:var(--subtle);letter-spacing:.1em;text-transform:uppercase}
+  #seoDash .stat .big{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:10px;font-variant-numeric:tabular-nums}
+  #seoDash .stat .big small{font-size:1rem;font-weight:700;color:var(--faint);letter-spacing:-.01em}
+  #seoDash .stat .note{font-size:.78rem;color:var(--subtle);margin-top:8px}
+  #seoDash .panel{background:var(--surface);border-radius:20px;box-shadow:0 1px 3px rgba(30,20,60,.05);margin-bottom:22px;overflow:hidden}
+  #seoDash .ph{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  #seoDash .ph h2{font-size:1.05rem;font-weight:800;letter-spacing:-.01em;margin:0}
+  #seoDash .ph .cnt{font-size:.78rem;font-weight:700;color:var(--purple-ink);background:var(--purple-tint);padding:4px 10px;border-radius:99px;white-space:nowrap}
+  #seoDash .ph .spacer{flex:1}
+  #seoDash .ph .hint{font-size:.78rem;color:var(--subtle)}
+  #seoDash .modgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;align-items:start}
+  #seoDash .modgrid .panel{margin-bottom:0}
+  #seoDash .col-12{grid-column:span 12}
+  #seoDash .col-6{grid-column:span 6}
+  @media(max-width:900px){#seoDash .col-6{grid-column:span 12}}
+  #seoDash .ovtoggle{display:flex;gap:3px;background:#f0eef5;border-radius:10px;padding:3px}
+  #seoDash .ovseg{border:none;background:none;font:700 .78rem/1 'Inter',sans-serif;color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer}
+  #seoDash .ovseg.on{background:#fff;color:var(--purple-ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  #seoDash .ov{display:grid;grid-template-columns:212px 1fr}
+  #seoDash .ov-rail{padding:20px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:17px}
+  #seoDash .ov-chart{padding:14px 18px 8px;min-width:0;overflow:hidden}
+  #seoDash .ovscroll{overflow-x:auto;overflow-y:hidden;padding-bottom:4px}
+  #seoDash .ov-chart svg{display:block;height:auto}
+  #seoDash .ovs .l{font-size:.66rem;font-weight:700;color:var(--subtle);letter-spacing:.08em;text-transform:uppercase}
+  #seoDash .ovs .v{font-size:1.75rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:5px;line-height:1}
+  #seoDash .ovs .v small{font-size:.95rem;font-weight:700;color:var(--faint)}
+  #seoDash .ovs .d{font-size:.8rem;font-weight:700;margin-top:7px;display:inline-flex;align-items:center;gap:5px}
+  #seoDash .ovs .d.up{color:var(--good)} #seoDash .ovs .d.down{color:var(--bad)} #seoDash .ovs .d.flat{color:var(--subtle)}
+  #seoDash .ov-dist{display:flex;gap:16px;padding-top:3px;border-top:1px solid var(--line);margin-top:1px}
+  #seoDash .ov-dist .c .n{font-size:1.2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+  #seoDash .ov-dist .c .k{font-size:.62rem;font-weight:700;color:var(--subtle);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+  #seoDash .ovgrid line{stroke:var(--line)} #seoDash .ovgrid text{fill:var(--subtle);font:600 11px 'Inter',sans-serif}
+  #seoDash .ovx text{fill:var(--subtle);font:600 11px 'Inter',sans-serif}
+  #seoDash .ovend{fill:#fff;font:800 12px 'Inter',sans-serif}
+  #seoDash .nodata{padding:34px 22px;text-align:center;color:var(--subtle);font-size:.86rem;font-weight:600}
+  #seoDash .nodata .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--faint);margin-right:7px;vertical-align:middle}
+  @media(max-width:760px){#seoDash .ov{grid-template-columns:1fr}#seoDash .ov-rail{border-right:none;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap;gap:20px;align-items:flex-end}}
+  #seoDash .cad-body{padding:20px 22px}
+  #seoDash .cad-big{font-size:2rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+  #seoDash .cad-big small{font-size:.95rem;color:var(--faint);font-weight:700}
+  #seoDash .cad-state{font-size:.82rem;font-weight:700;margin-top:7px}
+  #seoDash .cad-state.met{color:var(--good)} #seoDash .cad-state.miss{color:var(--warn)}
+  #seoDash .cad-chart{margin-top:14px} #seoDash .cad-chart svg{display:block;width:100%;height:auto}
+  #seoDash .cadx text{fill:var(--subtle);font:600 11px 'Inter',sans-serif}
+  #seoDash .cad-val{font:800 11px 'Inter',sans-serif}
+  #seoDash .cad-goalt{fill:var(--purple-ink);font:800 10px var(--mono);letter-spacing:.04em}
+  #seoDash .cad-sub{font-size:.78rem;color:var(--subtle);margin-top:11px}
+  #seoDash .cad-nd{padding:8px 0 4px;text-align:center;color:var(--subtle)}
+  #seoDash .cad-nd .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--faint);margin-bottom:10px}
+  #seoDash .cad-nd .t{font-size:1.1rem;font-weight:800;color:var(--muted)}
+  #seoDash .cad-nd .s{font-size:.78rem;color:var(--subtle);margin-top:6px}
+  #seoDash .tscroll{overflow-x:auto}
+  #seoDash .ktable{width:100%;border-collapse:collapse;min-width:640px}
+  #seoDash .ktable th{font-size:.66rem;font-weight:700;color:var(--subtle);letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:11px 22px;border-bottom:1px solid var(--line);white-space:nowrap}
+  #seoDash .ktable th.c{text-align:center} #seoDash .ktable th.r{text-align:right}
+  #seoDash .ktable th.you{color:var(--purple-ink);background:var(--purple-wash)}
+  #seoDash .ktable td{padding:15px 22px;border-bottom:1px solid var(--line2);vertical-align:middle}
+  #seoDash .ktable tr:last-child td{border-bottom:none}
+  #seoDash .ktable tr.krow:hover{background:var(--purple-wash)}
+  #seoDash .kw{font-size:.98rem;font-weight:700;letter-spacing:-.01em}
+  #seoDash .kurl{font-size:.74rem;color:var(--subtle);margin-top:3px;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+  #seoDash .vol{font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+  #seoDash .vol small{display:block;font-size:.68rem;color:var(--subtle);font-weight:600}
+  #seoDash .bcell{text-align:center} #seoDash .bcell.you{background:var(--purple-wash)}
+  #seoDash .cp{font-weight:800;font-size:1.2rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  #seoDash .bcell.you .cp{color:var(--purple-ink)}
+  #seoDash .chg{font-size:.72rem;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+  #seoDash .chg.up{color:var(--good)} #seoDash .chg.down{color:var(--bad)} #seoDash .chg.flat{color:var(--faint)}
+  #seoDash .lscroll{max-height:340px;overflow-y:auto}
+  #seoDash .lrow{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line2);text-decoration:none}
+  #seoDash .lrow .ld{color:var(--subtle);font-size:.72rem;font-weight:700;min-width:46px;flex:none}
+  #seoDash .lrow .lt{flex:1;min-width:0;font-size:.82rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #seoDash .lrow .la{color:var(--purple);font-size:.8rem;flex:none}
+  #seoDash .lempty{padding:16px;color:var(--subtle);font-size:.82rem}
+  #seoDash .badge{display:inline-block;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:99px;flex:none}
+  #seoDash .badge.ok{background:var(--good-tint);color:#0d7a46}
+  #seoDash .badge.wait{background:var(--warn-tint);color:#9a6b0c}
+  #seoDash .qtable{width:100%;border-collapse:collapse;min-width:520px}
+  #seoDash .qtable th{font-size:.66rem;font-weight:700;color:var(--subtle);letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:11px 22px;border-bottom:1px solid var(--line)}
+  #seoDash .qtable td{padding:12px 22px;border-bottom:1px solid var(--line2);font-size:.86rem;vertical-align:top}
+  #seoDash .qtable tr:last-child td{border-bottom:none}
+  #seoDash .muted{color:var(--subtle);font-size:.78rem}
+  #seoDash .foot{font-size:.75rem;color:#8a8d8f;margin-top:22px}
+  #seoDash .foot code{font-family:var(--mono);font-size:.9em}
 
   /* login */
   .login{max-width:380px;margin:12vh auto 0;background:#fff;border-radius:20px;box-shadow:0 8px 30px rgba(25,26,26,.10);padding:34px}
@@ -77,7 +146,7 @@
       <div class="logo">EH</div>
       <div>
         <h1>Pittsburgh Event Hub — SEO Backend</h1>
-        <div class="sub">pittsburgheventhub.com · auto-blog + Google Business engine</div>
+        <div class="sub" id="mastSub">pittsburgheventhub.com · auto-blog + Google Business engine</div>
       </div>
     </div>
     <div class="actions">
@@ -87,24 +156,46 @@
     </div>
   </div>
 
-  <div class="tiles">
-    <div class="tile"><div class="num" id="statPosts">–</div><div class="lbl">Posts Published</div></div>
-    <div class="tile"><div class="num" id="statQueue">–</div><div class="lbl">Topics Queued</div></div>
-    <div class="tile"><div class="num" id="statGbp">–</div><div class="lbl">GBP Posts</div></div>
-    <div class="tile"><div class="num" id="statLast" style="font-size:1.05rem;line-height:2.1rem">–</div><div class="lbl">Last Post</div></div>
-  </div>
+  <div id="seoDash">
+    <div class="stats">
+      <div class="stat"><div class="lab">Posts Published</div><div class="big" id="statPosts">–</div><div class="note">Blog guides live on the site</div></div>
+      <div class="stat"><div class="lab">Topics Queued</div><div class="big" id="statQueue">–</div><div class="note">Waiting for the routine</div></div>
+      <div class="stat"><div class="lab">GBP Posts</div><div class="big" id="statGbp">–</div><div class="note">Google Business updates</div></div>
+      <div class="stat"><div class="lab">Best Ranking</div><div class="big" id="statBest">–</div><div class="note" id="statBestNote">Lowest organic position</div></div>
+    </div>
 
-  <div class="card">
-    <h2>Published Posts</h2>
-    <div id="postsTable"></div>
-  </div>
+    <div class="modgrid">
+      <div class="panel col-12">
+        <div class="ph"><h2>Ranking Performance</h2><span class="cnt" id="seoOvChip">No history yet</span><div class="spacer"></div>
+          <div class="ovtoggle" id="seoOvToggle"><button class="ovseg on" data-m="position">Avg position</button><button class="ovseg" data-m="visibility">Visibility</button></div></div>
+        <div class="ov"><div class="ov-rail" id="seoOvRail"></div><div class="ov-chart" id="seoOvChart"><div class="nodata"><span class="dot"></span>Loading rankings…</div></div></div>
+      </div>
 
-  <div class="card">
-    <h2>Topic Queue <span class="muted">(the routine takes the top one each Mon &amp; Thu)</span></h2>
-    <div id="queueTable"></div>
-  </div>
+      <div class="panel col-6"><div class="ph"><h2>Blogs Published</h2><span class="cnt">Goal 2/wk</span><div class="spacer"></div><span class="hint">Posts per week</span></div><div class="cad-body" id="seoBlogCad"><div class="cad-nd"><span class="dot"></span><div class="t">Loading…</div></div></div></div>
+      <div class="panel col-6"><div class="ph"><h2>Google Posts</h2><span class="cnt">Goal 2/wk</span><div class="spacer"></div><span class="hint">GBP posts per week</span></div><div class="cad-body" id="seoGbizCad"><div class="cad-nd"><span class="dot"></span><div class="t">Loading…</div></div></div></div>
 
-  <p class="muted">Powered by the Event Hub SEO Publisher routine. Data lives in Supabase (<code>eventhub_posts</code> / <code>eventhub_queue</code>).</p>
+      <div class="panel col-6"><div class="ph"><h2>Published Blogs</h2><span class="cnt" id="seoBlogListCnt">—</span><div class="spacer"></div><span class="hint">Newest first · scroll for older</span></div><div class="lscroll" id="seoBlogList"><div class="lempty">Loading…</div></div></div>
+      <div class="panel col-6"><div class="ph"><h2>Google Business Posts</h2><span class="cnt" id="seoGbpListCnt">—</span><div class="spacer"></div><span class="hint">Newest first · scroll for older</span></div><div class="lscroll" id="seoGbpList"><div class="lempty">Loading…</div></div></div>
+
+      <div class="panel col-12">
+        <div class="ph"><h2>Keyword Rankings</h2><span class="cnt" id="seoKwChip">— tracked</span><span class="cnt" id="seoKwSynced" title="Rankings auto-update nightly" style="color:#1f7a48;background:#e7f6ec;cursor:help">Synced —</span><div class="spacer"></div><span class="hint">You vs the POB site (twin-brand watch)</span></div>
+        <div class="tscroll"><table class="ktable"><thead><tr>
+          <th>Keyword</th>
+          <th class="c you" title="Organic (blue-link) position for pittsburgheventhub.com">You · Organic</th>
+          <th class="c you" title="Position inside Google's local map pack">You · Map</th>
+          <th class="c" title="partyonbutler.com organic position — the twin brand">POB site</th>
+          <th class="r">Volume</th>
+        </tr></thead><tbody id="seoKbody"><tr><td colspan="5"><div class="nodata"><span class="dot"></span>Loading keywords…</div></td></tr></tbody></table></div>
+      </div>
+
+      <div class="panel col-12">
+        <div class="ph"><h2>Topic Queue</h2><span class="cnt" id="seoQueueChip">—</span><div class="spacer"></div><span class="hint">The routine takes the top one each Mon &amp; Thu</span></div>
+        <div class="tscroll" id="queueTable"><div class="nodata"><span class="dot"></span>Loading queue…</div></div>
+      </div>
+    </div>
+
+    <p class="foot">Powered by the Event Hub SEO Publisher routine. Data lives in Supabase (<code>eventhub_posts</code> / <code>eventhub_queue</code> / <code>eventhub_gbp_posts</code> / <code>seo_keyword_rankings</code>).</p>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
@@ -114,37 +205,466 @@ var sb = window.supabase.createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtsc2NnbHZ3d3pwcW96aWhlcGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODQ2NDksImV4cCI6MjA4NzE2MDY0OX0.G8ogZTRvE7t9Is78YmI6-j4Uc449_WyRE61Z7Vz_PSA'
 );
 
-function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
-function fmtDate(s){if(!s)return '—';var d=new Date(s);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+var YOU = 'pittsburgheventhub.com';
+var POB = 'partyonbutler.com';
 
-async function loadDash(){
-  var posts=(await sb.from('eventhub_posts').select('*').order('published_at',{ascending:false})).data||[];
-  var queue=(await sb.from('eventhub_queue').select('*').eq('status','queued').order('priority')).data||[];
+/* ── helpers ── */
+function escHtml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function seoPath(url){
+  if (!url) return '/';
+  var p = String(url).replace(/^https?:\/\/[^\/]+/,'').replace(/[?#].*$/,'').replace(/\/+$/,'');
+  return p || '/';
+}
+function posValue(p){ return Math.max(0, Math.min(100, (21 - Math.min(p, 21)) / 20 * 100)); }
+function seoFmtDate(iso){
+  try { var d = new Date(String(iso).slice(0,10) + 'T00:00:00'); return d.toLocaleString('en-US',{month:'short',day:'numeric'}); }
+  catch(e){ return iso; }
+}
+function fmtDateFull(s){ if(!s) return '—'; var d=new Date(s); return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
 
-  document.getElementById('statPosts').textContent=posts.length;
-  document.getElementById('statQueue').textContent=queue.length;
-  document.getElementById('statGbp').textContent=posts.filter(function(p){return p.gbp_posted;}).length;
-  document.getElementById('statLast').textContent=posts.length?fmtDate(posts[0].published_at):'None yet';
+/* ── module state ── */
+var seoData = null;      // built keyword rows { kws, allDates, raw }
+var seoOvMode = 'position';
 
-  var pt=document.getElementById('postsTable');
-  if(!posts.length){pt.innerHTML='<div class="empty">No posts yet — the routine publishes Mondays &amp; Thursdays at 9am.</div>';}
-  else{
-    pt.innerHTML='<table><tr><th>Title</th><th>Published</th><th>Keyword</th><th>Google Business</th></tr>'+posts.map(function(p){
-      return '<tr><td><a href="'+esc(p.url)+'" target="_blank" rel="noopener">'+esc(p.title)+'</a>'+(p.notes?'<div class="muted">'+esc(p.notes)+'</div>':'')+'</td>'+
-        '<td>'+fmtDate(p.published_at)+'</td><td class="muted">'+esc(p.keyword||'—')+'</td>'+
-        '<td>'+(p.gbp_posted?'<span class="badge ok">Posted '+fmtDate(p.gbp_posted_at)+'</span>':'<span class="badge err">Not posted</span>')+'</td></tr>';
-    }).join('')+'</table>';
-  }
-
-  var qt=document.getElementById('queueTable');
-  if(!queue.length){qt.innerHTML='<div class="empty">Queue is empty — the routine will invent its next topic automatically.</div>';}
-  else{
-    qt.innerHTML='<table><tr><th>#</th><th>Topic</th><th>Target keyword</th><th>Status</th></tr>'+queue.map(function(q,i){
-      return '<tr><td class="muted">'+(i+1)+'</td><td>'+esc(q.topic)+'</td><td class="muted">'+esc(q.keyword||'—')+'</td><td><span class="badge wait">queued</span></td></tr>';
-    }).join('')+'</table>';
-  }
+/* ── data fetch: rankings + active keywords ── */
+async function fetchSEORankings(){
+  var res = await Promise.all([
+    sb.from('seo_tracked_keywords').select('keyword').eq('domain', YOU).eq('active', true).order('keyword'),
+    sb.from('seo_keyword_rankings').select('keyword,domain,position,map_position,url,search_volume,checked_date,updated_at')
+      .in('domain', [YOU, POB]).order('checked_date', { ascending:false }).limit(3000)
+  ]);
+  return { keywords: res[0].data || [], rankings: res[1].data || [] };
 }
 
+/* ── build per-keyword rows from raw rankings (ported buildSEOData; no cutover — EH data starts fresh) ── */
+function buildSEOData(raw){
+  var rows = raw.rankings || [];
+  function rowsFor(keyword, domain){
+    return rows.filter(function(r){ return r.keyword === keyword && (r.domain || YOU) === domain; });
+  }
+  // EH distinct checked dates oldest→newest
+  var dset = {};
+  rows.forEach(function(r){ if ((r.domain || YOU) === YOU && r.checked_date) dset[r.checked_date] = 1; });
+  var allDates = Object.keys(dset).sort();
+  var active = (raw.keywords || []).map(function(k){ return k.keyword; });
+  // fall back to any EH keyword present in rankings if tracked list empty
+  if (!active.length){
+    var seen = {};
+    rows.forEach(function(r){ if ((r.domain || YOU) === YOU) seen[r.keyword] = 1; });
+    active = Object.keys(seen);
+  }
+  var kws = active.map(function(kw){
+    var youRows = rowsFor(kw, YOU);                 // newest→oldest
+    var latest = youRows[0] || null;
+    var url = (latest && latest.url) ? seoPath(latest.url) : '/';
+    var vol = null;
+    for (var i = 0; i < youRows.length; i++){ if (youRows[i].search_volume != null){ vol = youRows[i].search_volume; break; } }
+    // history: position over last ~8 distinct dates oldest→newest
+    var byDate = {};
+    youRows.forEach(function(r){ if (r.checked_date && byDate[r.checked_date] === undefined) byDate[r.checked_date] = r.position; });
+    var histDates = Object.keys(byDate).sort();
+    if (histDates.length > 8) histDates = histDates.slice(histDates.length - 8);
+    var hist = histDates.map(function(d){ return byDate[d]; }).filter(function(v){ return v != null; });
+    // cells: YOU + POB with day-over-day change vs previous snapshot
+    function cellFor(domain){
+      var dr = rowsFor(kw, domain);
+      var lt = dr[0] || null, pv = dr[1] || null;
+      var pos = (lt && lt.position != null) ? lt.position : null;
+      var ppos = (pv && pv.position != null) ? pv.position : null;
+      var chg = (pos != null && ppos != null) ? (ppos - pos) : null;  // positive = improved
+      var map = (lt && lt.map_position != null) ? lt.map_position : null;
+      var pmap = (pv && pv.map_position != null) ? pv.map_position : null;
+      var mapChg = (map != null && pmap != null) ? (pmap - map) : null;
+      return { pos: pos, chg: chg, map: map, mapChg: mapChg };
+    }
+    var bus = [cellFor(YOU), cellFor(POB)];
+    return { kw: kw, url: url, vol: vol, hist: hist, bus: bus, latestPos: (latest && latest.position != null) ? latest.position : null };
+  });
+  return { kws: kws, allDates: allDates, raw: rows };
+}
+
+/* ── trend series (EH rows only) ── */
+function seoTrendSeries(){
+  var dates = seoData.allDates || [];
+  var kws = seoData.kws || [];
+  var pos = [], vis = [], labels = [];
+  dates.forEach(function(d){
+    var ps = [], totVol = 0, visAcc = 0;
+    kws.forEach(function(k){
+      var raw = seoData.raw, rec = null;
+      for (var i = 0; i < raw.length; i++){ var r = raw[i]; if (r.keyword === k.kw && (r.domain || YOU) === YOU && r.checked_date === d){ rec = r; break; } }
+      if (rec && rec.position != null){
+        ps.push(rec.position);
+        var v = k.vol || 1;
+        totVol += v; visAcc += posValue(rec.position) * v;
+      }
+    });
+    if (ps.length){
+      pos.push(ps.reduce(function(a,b){ return a+b; }, 0) / ps.length);
+      vis.push(totVol ? visAcc / totVol : 0);
+      labels.push(d);
+    }
+  });
+  return { pos: pos, vis: vis, labels: labels };
+}
+function seoLastSynced(){
+  var raw = (seoData && seoData.raw) || [];
+  var max = 0;
+  for (var i = 0; i < raw.length; i++){
+    var u = raw[i].updated_at || (raw[i].checked_date ? raw[i].checked_date + 'T06:00:00Z' : null);
+    if (u){ var t = new Date(u).getTime(); if (t > max) max = t; }
+  }
+  return max ? new Date(max) : null;
+}
+function seoSyncedLabel(){
+  var d = seoLastSynced();
+  return d ? d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : 'never';
+}
+
+/* ── ranking performance chart (ported renderSEOTrend) ── */
+function renderSEOTrend(){
+  var rail = document.getElementById('seoOvRail');
+  var chart = document.getElementById('seoOvChart');
+  if (!rail || !chart) return;
+  if (!seoData || !seoData.kws){ chart.innerHTML = '<div class="nodata"><span class="dot"></span>Loading rankings…</div>'; return; }
+  var S = seoTrendSeries();
+  if (S.labels.length < 2){
+    rail.innerHTML = '';
+    chart.innerHTML = '<div class="nodata"><span class="dot"></span>Building history… need at least 2 days of rank data to chart a trend.</div>';
+    return;
+  }
+  var isPos = seoOvMode === 'position';
+  var data = isPos ? S.pos : S.vis;
+  var col = isPos ? '#7257e8' : '#1f9d57';
+  var L = 46, R = 14, T = 20, B = 30, H = 232;
+  var avail = chart.clientWidth ? Math.floor(chart.clientWidth - 36) : 760;
+  var W = Math.max(560, Math.min(960, Math.max(avail, data.length * 60)));
+  var plotW = W - L - R, plotH = H - T - B;
+  var lo = Math.min.apply(null, data), hi = Math.max.apply(null, data);
+  if (isPos){ lo = Math.floor(lo - 0.6); hi = Math.ceil(hi + 0.6); } else { lo = Math.max(0, Math.floor(lo - 6)); hi = Math.min(100, Math.ceil(hi + 6)); }
+  var span = Math.max(1, hi - lo);
+  var xAt = function(i){ return data.length === 1 ? L + plotW / 2 : L + i * plotW / (data.length - 1); };
+  var yAt = function(v){ return isPos ? (T + (v - lo) / span * plotH) : (T + (hi - v) / span * plotH); };
+  var grid = '';
+  for (var g = 0; g <= 3; g++){
+    var val = lo + span * g / 3;
+    var y = isPos ? (T + (val - lo) / span * plotH) : (T + (hi - val) / span * plotH);
+    var label = isPos ? ('#' + Math.round(val)) : (Math.round(val) + '%');
+    grid += '<line x1="' + L + '" y1="' + y.toFixed(1) + '" x2="' + (W - R) + '" y2="' + y.toFixed(1) + '"/><text x="' + (L - 10) + '" y="' + (y + 4).toFixed(1) + '" text-anchor="end">' + label + '</text>';
+  }
+  var pts = data.map(function(v, i){ return [xAt(i), yAt(v)]; });
+  var line = pts.map(function(p, i){ return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+  var area = line + ' L ' + pts[pts.length - 1][0].toFixed(1) + ' ' + (T + plotH) + ' L ' + pts[0][0].toFixed(1) + ' ' + (T + plotH) + ' Z';
+  var dots = pts.map(function(p, i){
+    var last = i === pts.length - 1;
+    return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (last ? 4.5 : 2.6) + '" fill="' + col + '" stroke="#fff" stroke-width="' + (last ? 1.5 : 1) + '"/>';
+  }).join('');
+  var xl = '';
+  S.labels.forEach(function(d, i){
+    if (i % Math.max(1, Math.ceil(S.labels.length / 6)) === 0 || i === S.labels.length - 1){
+      xl += '<text x="' + xAt(i).toFixed(1) + '" y="' + (H - 9) + '" text-anchor="' + (i === 0 ? 'start' : (i === S.labels.length - 1 ? 'end' : 'middle')) + '">' + seoFmtDate(d) + '</text>';
+    }
+  });
+  var endV = data[data.length - 1], endP = pts[pts.length - 1];
+  var endLabel = isPos ? ('#' + endV.toFixed(1)) : (endV.toFixed(0) + '%');
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block;touch-action:none" role="img" aria-label="Ranking trend">' +
+    '<defs><linearGradient id="seoOvg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".16"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+    '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="transparent"/>' +
+    '<g class="ovgrid">' + grid + '</g>' +
+    '<path d="' + area + '" fill="url(#seoOvg)"/>' +
+    '<path d="' + line + '" fill="none" stroke="' + col + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<g class="ovfocus" style="display:none"><line class="ovfline" x1="0" y1="' + T + '" x2="0" y2="' + (T + plotH) + '" stroke="' + col + '" stroke-width="1" stroke-opacity="0.45" stroke-dasharray="3 3"/><circle class="ovfdot" r="5.5" fill="' + col + '" stroke="#fff" stroke-width="2"/></g>' +
+    dots +
+    '<rect x="' + (endP[0] - 58).toFixed(1) + '" y="' + (endP[1] - 26).toFixed(1) + '" width="52" height="19" rx="6" fill="' + col + '"/>' +
+    '<text class="ovend" x="' + (endP[0] - 32).toFixed(1) + '" y="' + (endP[1] - 12).toFixed(1) + '" text-anchor="middle" fill="#fff">' + endLabel + '</text>' +
+    '<g class="ovx">' + xl + '</g></svg>';
+  chart.innerHTML = '<div class="ovscroll">' + svg + '</div>';
+  var sc = chart.querySelector('.ovscroll'); if (sc) sc.scrollLeft = sc.scrollWidth;
+
+  // interactive hover: crosshair + focus dot + floating tooltip
+  (function(){
+    var svgEl = chart.querySelector('svg');
+    if (!svgEl || data.length < 2) return;
+    var focus = svgEl.querySelector('.ovfocus');
+    var fline = svgEl.querySelector('.ovfline');
+    var fdot = svgEl.querySelector('.ovfdot');
+    var tip = document.getElementById('seoOvTip');
+    if (!tip){
+      tip = document.createElement('div'); tip.id = 'seoOvTip';
+      tip.style.cssText = 'position:fixed;z-index:99999;display:none;pointer-events:none;background:#1b1830;color:#fff;font:600 11px/1.45 Inter,-apple-system,sans-serif;padding:6px 9px;border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.28);white-space:nowrap;';
+      document.body.appendChild(tip);
+    }
+    function at(clientX, clientY){
+      var r = svgEl.getBoundingClientRect();
+      if (!r.width) return;
+      var sx = (clientX - r.left) * (W / r.width);
+      var i = Math.round((sx - L) / (plotW / (data.length - 1)));
+      if (i < 0) i = 0; if (i > data.length - 1) i = data.length - 1;
+      var px = xAt(i), py = yAt(data[i]);
+      fline.setAttribute('x1', px.toFixed(1)); fline.setAttribute('x2', px.toFixed(1));
+      fdot.setAttribute('cx', px.toFixed(1)); fdot.setAttribute('cy', py.toFixed(1));
+      focus.style.display = '';
+      tip.innerHTML = '<b style="display:block;opacity:.75;font-size:10px;margin-bottom:1px;">' + escHtml(seoFmtDate(S.labels[i])) + '</b>'
+        + (isPos ? ('Avg position #' + data[i].toFixed(1)) : (data[i].toFixed(0) + '% visibility'));
+      tip.style.display = 'block';
+      var tw = tip.offsetWidth || 130, th = tip.offsetHeight || 34;
+      var x = clientX + 14, y = clientY - th - 12;
+      if (x + tw > window.innerWidth - 6) x = clientX - tw - 14;
+      if (y < 6) y = clientY + 18;
+      tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    }
+    svgEl.addEventListener('mousemove', function(e){ at(e.clientX, e.clientY); });
+    svgEl.addEventListener('mouseleave', function(){ focus.style.display = 'none'; tip.style.display = 'none'; });
+    svgEl.addEventListener('touchstart', function(e){ if (e.touches[0]) at(e.touches[0].clientX, e.touches[0].clientY); }, { passive:true });
+    svgEl.addEventListener('touchmove', function(e){ if (e.touches[0]) at(e.touches[0].clientX, e.touches[0].clientY); }, { passive:true });
+    svgEl.addEventListener('touchend', function(){ focus.style.display = 'none'; tip.style.display = 'none'; });
+  })();
+
+  // rail summary
+  var avgNow = S.pos[S.pos.length - 1], avgThen = S.pos[0], posImp = avgThen - avgNow;
+  var visNow = S.vis[S.vis.length - 1], visThen = S.vis[0], visImp = visNow - visThen;
+  var last = seoData.kws.map(function(k){ return k.latestPos; }).filter(function(p){ return p != null; });
+  var top3 = last.filter(function(p){ return p <= 3; }).length;
+  var top5 = last.filter(function(p){ return p <= 5; }).length;
+  var top10 = last.filter(function(p){ return p <= 10; }).length;
+  var improving = seoData.kws.filter(function(k){ return k.hist.length >= 2 && k.hist[k.hist.length - 1] <= k.hist[0]; }).length;
+  rail.innerHTML =
+    '<div class="ovs"><div class="l">Avg position</div><div class="v">#' + avgNow.toFixed(1) + '</div>' +
+      '<div class="d ' + (posImp > 0 ? 'up' : (posImp < 0 ? 'down' : 'flat')) + '">' + (posImp > 0 ? '▲ ' + posImp.toFixed(1) + ' better' : (posImp < 0 ? '▼ ' + Math.abs(posImp).toFixed(1) + ' worse' : '— flat')) + '</div></div>' +
+    '<div class="ovs"><div class="l">Visibility</div><div class="v">' + visNow.toFixed(0) + '<small>%</small></div>' +
+      '<div class="d ' + (visImp > 0 ? 'up' : (visImp < 0 ? 'down' : 'flat')) + '">' + (visImp > 0 ? '▲ ' + visImp.toFixed(0) : (visImp < 0 ? '▼ ' + Math.abs(visImp).toFixed(0) : '—')) + ' pts</div></div>' +
+    '<div class="ovs"><div class="l">Keywords improving</div><div class="v">' + improving + '<small> / ' + seoData.kws.length + '</small></div></div>' +
+    '<div class="ov-dist">' +
+      '<div class="c"><div class="n">' + top3 + '</div><div class="k">Top 3</div></div>' +
+      '<div class="c"><div class="n">' + top5 + '</div><div class="k">Top 5</div></div>' +
+      '<div class="c"><div class="n">' + top10 + '</div><div class="k">Top 10</div></div></div>';
+}
+
+/* ── keyword rankings table (ported renderSEOKeywords) ── */
+function renderSEOKeywords(){
+  var body = document.getElementById('seoKbody');
+  if (!body) return;
+  if (!seoData.kws.length){
+    body.innerHTML = '<tr><td colspan="5"><div class="nodata"><span class="dot"></span>No keywords tracked yet — the rank checker will start populating this after its first nightly run.</div></td></tr>';
+    return;
+  }
+  body.innerHTML = seoData.kws.map(function(k){
+    var cell = function(b, you){
+      var posTxt = b.pos == null ? '—' : '#' + b.pos;
+      var dir = b.chg == null ? 'flat' : (b.chg > 0 ? 'up' : (b.chg < 0 ? 'down' : 'flat'));
+      var arrow = b.chg == null ? '' : (b.chg > 0 ? '▲ ' + b.chg : (b.chg < 0 ? '▼ ' + Math.abs(b.chg) : '—'));
+      return '<td class="bcell' + (you ? ' you' : '') + '"><div class="cp">' + posTxt + '</div><div class="chg ' + dir + '">' + arrow + '</div></td>';
+    };
+    // EH gets two cells — organic rank and map-pack slot are separate rankings
+    var mapCell = function(b){
+      var t = b.map == null ? '—' : '#' + b.map;
+      var dir = b.mapChg == null ? 'flat' : (b.mapChg > 0 ? 'up' : (b.mapChg < 0 ? 'down' : 'flat'));
+      var arrow = b.mapChg == null ? '' : (b.mapChg > 0 ? '▲ ' + b.mapChg : (b.mapChg < 0 ? '▼ ' + Math.abs(b.mapChg) : '—'));
+      return '<td class="bcell you" title="Position inside Google\'s local map pack"><div class="cp">' + t + '</div><div class="chg ' + dir + '">' + arrow + '</div></td>';
+    };
+    return '<tr class="krow">' +
+      '<td><div class="kw">' + escHtml(k.kw) + '</div><div class="kurl">' + escHtml(k.url === '/' ? 'Homepage' : k.url) + '</div></td>' +
+      cell(k.bus[0], true) + mapCell(k.bus[0]) +
+      cell(k.bus[1], false) +
+      '<td class="vol">' + (k.vol != null ? k.vol : '—') + '<small>/mo searches</small></td>' +
+      '</tr>';
+  }).join('');
+}
+
+/* ── cadence bars (ported seoMiniBars + seoBuildCadence) ── */
+function seoMiniBars(counts, weeks, goal){
+  var W = 520, H = 162, Lp = 8, Rp = 8, Tp = 24, Bp = 30, plotW = W - Lp - Rp, plotH = H - Tp - Bp;
+  var maxN = Math.max.apply(null, [goal].concat(counts)) + 1;
+  var slot = plotW / counts.length, bw = Math.min(30, slot * 0.62);
+  var yAt = function(v){ return Tp + plotH - v / maxN * plotH; };
+  var bars = '', vals = '', xl = '';
+  counts.forEach(function(v, i){
+    var cx = Lp + slot * i + slot / 2, x = cx - bw / 2, y = yAt(v), h = Tp + plotH - y;
+    var met = v >= goal, col = met ? '#1f9d57' : '#d4cdec';
+    bars += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(2, h).toFixed(1) + '" rx="3" fill="' + col + '"/>';
+    vals += '<text class="cad-val" x="' + cx.toFixed(1) + '" y="' + (y - 6).toFixed(1) + '" text-anchor="middle" fill="' + (met ? '#191622' : '#9a96a6') + '">' + v + '</text>';
+    xl += '<text x="' + cx.toFixed(1) + '" y="' + (H - 10) + '" text-anchor="middle">' + escHtml(weeks[i] || '') + '</text>';
+  });
+  var gy = yAt(goal);
+  var goalLine = '<line x1="' + Lp + '" y1="' + gy.toFixed(1) + '" x2="' + (W - Rp) + '" y2="' + gy.toFixed(1) + '" stroke="#7257e8" stroke-width="1.5" stroke-dasharray="4 4"/><text class="cad-goalt" x="' + Lp + '" y="' + (gy - 6).toFixed(1) + '" text-anchor="start">Goal ' + goal + '</text>';
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="weekly cadence">' + goalLine + '<g>' + bars + '</g><g class="cadx">' + xl + '</g>' + vals + '</svg>';
+}
+// ISO-week Monday (UTC) for date d
+function seoIsoWeekMonday(d){
+  var x = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  var dow = (x.getUTCDay() + 6) % 7;
+  x.setUTCDate(x.getUTCDate() - dow);
+  return x;
+}
+// bucket a list of Date objects into the last 10 ISO weeks → {ok,weeks,counts,goal}
+function seoBuildCadence(dates, goal){
+  var WEEKS = 10; goal = goal || 2;
+  var thisMon = seoIsoWeekMonday(new Date());
+  var starts = [];
+  for (var i = WEEKS - 1; i >= 0; i--){ var s = new Date(thisMon); s.setUTCDate(s.getUTCDate() - i * 7); starts.push(s); }
+  var firstMs = starts[0].getTime();
+  var counts = []; for (var k = 0; k < WEEKS; k++) counts.push(0);
+  (dates || []).forEach(function(d){
+    var t = d.getTime(); if (isNaN(t) || t < firstMs) return;
+    var idx = Math.min(WEEKS - 1, Math.floor((t - firstMs) / (7 * 24 * 3600 * 1000)));
+    if (idx >= 0) counts[idx]++;
+  });
+  var weeks = starts.map(function(s, i){ return i === WEEKS - 1 ? 'Now' : (s.getUTCMonth() + 1) + '/' + s.getUTCDate(); });
+  return { ok: true, weeks: weeks, counts: counts, goal: goal };
+}
+// shared cadence panel renderer (ported renderSEOBlogCad); emptyMsg shown when res is null/!ok
+function renderCadPanel(res, hostId, emptyMsg){
+  var host = document.getElementById(hostId);
+  if (!host) return;
+  if (!res || !res.ok || !Array.isArray(res.counts) || !res.counts.length){
+    host.innerHTML = '<div class="cad-nd"><span class="dot"></span><div class="t">No data</div><div class="s">' + escHtml(emptyMsg || 'Nothing recorded yet.') + '</div></div>';
+    return;
+  }
+  var counts = res.counts, weeks = res.weeks || [], goal = res.goal || 2;
+  var now = counts[counts.length - 1], met = now >= goal;
+  var total = counts.reduce(function(a, b){ return a + b; }, 0), avg = (total / counts.length).toFixed(1);
+  host.innerHTML =
+    '<div class="cad-big">' + now + '<small> / ' + goal + ' this week</small></div>' +
+    '<div class="cad-state ' + (met ? 'met' : 'miss') + '">' + (met ? '✓ On pace this week' : (goal - now) + ' below goal this week') + '</div>' +
+    '<div class="cad-chart">' + seoMiniBars(counts, weeks, goal) + '</div>' +
+    '<div class="cad-sub">Avg ' + avg + '/wk · ' + total + ' in last ' + counts.length + ' weeks</div>';
+}
+
+/* ── content activity lists (ported seoListRow/seoListFill) ── */
+function seoListRow(dateIso, text, url, badge){
+  var d = '<span class="ld">' + escHtml(seoFmtDate(dateIso)) + '</span>';
+  var t = '<span class="lt">' + escHtml(text) + '</span>';
+  var b = badge || '';
+  var arrow = url ? '<span class="la">↗</span>' : '';
+  return url
+    ? '<a class="lrow" href="' + escHtml(url) + '" target="_blank" rel="noopener" title="' + escHtml(text) + '">' + d + t + b + arrow + '</a>'
+    : '<div class="lrow" title="' + escHtml(text) + '">' + d + t + b + '</div>';
+}
+function seoListFill(hostId, cntId, rowsHtml, count, noun, emptyMsg){
+  var host = document.getElementById(hostId);
+  if (!host) return;
+  host.innerHTML = count ? rowsHtml : '<div class="lempty">' + escHtml(emptyMsg || 'Nothing yet.') + '</div>';
+  var cnt = document.getElementById(cntId);
+  if (cnt) cnt.textContent = count + ' ' + noun;
+}
+function renderSEOBlogList(posts){
+  var rows = (posts || []).map(function(p){
+    var badge = p.gbp_posted ? '<span class="badge ok">GBP ✓</span>' : '<span class="badge wait">no GBP</span>';
+    var txt = (p.title || '(untitled)') + (p.keyword ? ' · ' + p.keyword : '');
+    return seoListRow(p.published_at, txt, p.url || null, badge);
+  }).join('');
+  seoListFill('seoBlogList', 'seoBlogListCnt', rows, (posts || []).length, 'posts', 'No posts yet — the routine publishes Mondays & Thursdays at 9am.');
+}
+function renderSEOGbpList(gbpRows, tableMissing){
+  if (tableMissing){
+    seoListFill('seoGbpList', 'seoGbpListCnt', '', 0, 'posts', 'Google Posts engine not deployed yet — this fills in once it ships.');
+    return;
+  }
+  var rows = (gbpRows || []).map(function(x){
+    var s = x.summary || 'Google post';
+    if (s.length > 90) s = s.slice(0, 88).trim() + '…';
+    var txt = (x.topic_type ? '[' + x.topic_type + '] ' : '') + s;
+    return seoListRow(x.posted_at, txt, x.cta_url || null);
+  }).join('');
+  seoListFill('seoGbpList', 'seoGbpListCnt', rows, (gbpRows || []).length, 'posts', 'Nothing yet — the first Google post lands here.');
+}
+
+/* ── topic queue (kept from the original dash) ── */
+function renderQueue(queue){
+  var qt = document.getElementById('queueTable');
+  var chip = document.getElementById('seoQueueChip');
+  if (chip) chip.textContent = queue.length + ' queued';
+  if (!queue.length){
+    qt.innerHTML = '<div class="nodata"><span class="dot"></span>Queue is empty — the routine will invent its next topic automatically.</div>';
+    return;
+  }
+  qt.innerHTML = '<table class="qtable"><thead><tr><th>#</th><th>Topic</th><th>Target keyword</th><th>Status</th></tr></thead><tbody>' + queue.map(function(q, i){
+    return '<tr><td class="muted">' + (i + 1) + '</td><td>' + escHtml(q.topic) + '</td><td class="muted">' + escHtml(q.keyword || '—') + '</td><td><span class="badge wait">queued</span></td></tr>';
+  }).join('') + '</tbody></table>';
+}
+
+/* ── load everything ── */
+async function loadDash(){
+  // fire all queries in parallel; each one fails soft
+  var postsQ = sb.from('eventhub_posts').select('title,slug,url,keyword,status,gbp_posted,gbp_posted_at,published_at,notes').order('published_at', { ascending:false });
+  var queueQ = sb.from('eventhub_queue').select('*').eq('status', 'queued').order('priority');
+  var gbpQ = sb.from('eventhub_gbp_posts').select('posted_at,location,topic_type,summary,cta_type,cta_url,photo_url,source').order('posted_at', { ascending:false }).limit(500);
+
+  var results = await Promise.all([
+    postsQ.then(function(r){ return r; }, function(e){ return { data: null, error: e }; }),
+    queueQ.then(function(r){ return r; }, function(e){ return { data: null, error: e }; }),
+    gbpQ.then(function(r){ return r; }, function(e){ return { data: null, error: e }; }),
+    fetchSEORankings().then(function(r){ return { data: r, error: null }; }, function(e){ return { data: null, error: e }; })
+  ]);
+  var posts = results[0].data || [];
+  var queue = results[1].data || [];
+  var gbpErr = !!results[2].error;   // eventhub_gbp_posts may not exist yet — code defensively
+  var gbpRows = results[2].data || [];
+  var rawRank = results[3].data;
+
+  // ── stat tiles ──
+  document.getElementById('statPosts').textContent = posts.length;
+  document.getElementById('statQueue').textContent = queue.length;
+  document.getElementById('statGbp').textContent = gbpErr
+    ? posts.filter(function(p){ return p.gbp_posted; }).length
+    : gbpRows.length;
+
+  // ── rankings: build data, then trend + table + best-ranking tile ──
+  if (rawRank){
+    seoData = buildSEOData(rawRank);
+    var best = null;
+    seoData.kws.forEach(function(k){ if (k.latestPos != null && (best == null || k.latestPos < best)) best = k.latestPos; });
+    document.getElementById('statBest').textContent = best == null ? '—' : '#' + best;
+    document.getElementById('statBestNote').textContent = best == null ? 'No rankings yet' : 'Lowest organic position';
+    var kwChip = document.getElementById('seoKwChip'); if (kwChip) kwChip.textContent = seoData.kws.length + ' tracked';
+    var syncChip = document.getElementById('seoKwSynced');
+    if (syncChip){
+      var d = seoLastSynced();
+      syncChip.textContent = 'Synced ' + seoSyncedLabel();
+      syncChip.title = 'Rankings auto-update nightly. Last sync: ' + (d ? d.toLocaleString() : 'never') + '.';
+    }
+    var ovChip = document.getElementById('seoOvChip');
+    if (ovChip) ovChip.textContent = (seoData.allDates && seoData.allDates.length) ? 'Since ' + seoFmtDate(seoData.allDates[0]) : 'No history yet';
+    var sub = document.getElementById('mastSub');
+    if (sub) sub.textContent = 'pittsburgheventhub.com · tracking ' + seoData.kws.length + ' keywords · synced ' + seoSyncedLabel();
+    renderSEOKeywords();
+    renderSEOTrend();
+  } else {
+    seoData = { kws: [], allDates: [], raw: [] };
+    document.getElementById('statBest').textContent = '—';
+    document.getElementById('statBestNote').textContent = 'Could not load rankings';
+    document.getElementById('seoKbody').innerHTML = '<tr><td colspan="5"><div class="nodata"><span class="dot"></span>Could not load rankings — try Refresh.</div></td></tr>';
+    renderSEOTrend();
+  }
+
+  // ── cadence panels (last 10 ISO weeks, goal 2/wk) ──
+  var blogDates = posts.filter(function(p){ return p.published_at; }).map(function(p){ return new Date(p.published_at); });
+  renderCadPanel(
+    blogDates.length ? seoBuildCadence(blogDates, 2) : null,
+    'seoBlogCad',
+    'No posts yet — cadence starts charting after the first publish.'
+  );
+  if (gbpErr){
+    // parallel agent hasn't created eventhub_gbp_posts yet — render, don't break
+    renderCadPanel(null, 'seoGbizCad', 'Google Posts engine not deployed yet — this fills in once it ships.');
+  } else {
+    var gbpDates = gbpRows.filter(function(x){ return x.posted_at; }).map(function(x){ return new Date(x.posted_at); });
+    renderCadPanel(
+      gbpDates.length ? seoBuildCadence(gbpDates, 2) : null,
+      'seoGbizCad',
+      'Nothing posted yet — cadence starts charting after the first Google post.'
+    );
+  }
+
+  // ── lists ──
+  renderSEOBlogList(posts);
+  renderSEOGbpList(gbpRows, gbpErr);
+
+  // ── topic queue ──
+  renderQueue(queue);
+}
+
+/* ── login shell (unchanged flow) ── */
 function show(id){document.getElementById('loginView').classList.toggle('hidden',id!=='login');document.getElementById('dashView').classList.toggle('hidden',id!=='dash');}
 
 async function init(){
@@ -161,6 +681,22 @@ document.getElementById('loginBtn').addEventListener('click',async function(){
 document.getElementById('password').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginBtn').click();});
 document.getElementById('logoutBtn').addEventListener('click',async function(){await sb.auth.signOut();show('login');});
 document.getElementById('refreshBtn').addEventListener('click',loadDash);
+
+// overview toggle (Avg position / Visibility)
+document.getElementById('seoOvToggle').addEventListener('click',function(e){
+  var b=e.target.closest('.ovseg');if(!b)return;
+  seoOvMode=b.dataset.m;
+  this.querySelectorAll('.ovseg').forEach(function(x){x.classList.toggle('on',x===b);});
+  renderSEOTrend();
+});
+// redraw the trend chart on resize
+(function(){
+  var rz;
+  window.addEventListener('resize',function(){
+    if(!document.getElementById('dashView').classList.contains('hidden')){clearTimeout(rz);rz=setTimeout(renderSEOTrend,160);}
+  });
+})();
+
 init();
 </script>
 </body>
