@@ -21,9 +21,9 @@ a{color:inherit}
 
 /* ---------- sidebar nav ---------- */
 .side-nav{position:fixed;left:0;top:0;bottom:0;width:230px;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;padding:28px 22px;z-index:100}
-.side-nav .logo img{width:150px;height:auto;display:block;border-radius:16px}
-.top-bar .logo img{height:40px;width:auto;display:block;border-radius:8px}
-footer .brand img{width:130px;height:auto;display:block;border-radius:14px}
+.side-nav .logo img{width:170px;height:auto;display:block}
+.top-bar .logo img{height:40px;width:auto;display:block}
+footer .brand img{width:170px;height:auto;display:block}
 .side-nav .logo{font-family:var(--display);font-size:26px;line-height:1.05;letter-spacing:.5px;color:var(--white);text-decoration:none}
 .side-nav .logo em{font-style:normal;color:var(--fuchsia)}
 .side-nav .tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-top:10px}
