@@ -320,7 +320,53 @@
       <span class="hand" style="color:var(--pink)">50% deposit locks it in →</span>
     </div>
     <div class="form-frame reveal">
-      <iframe src="https://api.leadconnectorhq.com/widget/survey/W2bJprgLCnw7SujP8SE6" title="Check availability — Party on Butler event space" loading="lazy"></iframe>
+      <form id="bookForm" novalidate>
+        <h3>Check Availability</h3>
+        <label for="bf-name">Full Name *</label>
+        <input id="bf-name" name="full_name" type="text" autocomplete="name" required>
+        <div class="bf-row">
+          <div>
+            <label for="bf-email">Email *</label>
+            <input id="bf-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div>
+            <label for="bf-phone">Phone</label>
+            <input id="bf-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+        <div class="bf-row">
+          <div>
+            <label for="bf-type">Event Type *</label>
+            <select id="bf-type" name="event_type" required>
+              <option value="" selected disabled>Choose one…</option>
+              <option>Birthday Party</option>
+              <option>Baby Shower</option>
+              <option>Bridal Shower</option>
+              <option>Wedding / Reception</option>
+              <option>Graduation Party</option>
+              <option>Corporate Event</option>
+              <option>Photo / Video Shoot</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="bf-date">Event Date *</label>
+            <input id="bf-date" name="event_date" type="date" required>
+          </div>
+        </div>
+        <label for="bf-package">Which package are you interested in? *</label>
+        <select id="bf-package" name="package" required>
+          <option value="" selected disabled>Choose one…</option>
+          <option>Weekday Rental — $1,500 (Mon–Fri)</option>
+          <option>Sunday Rental — $2,000</option>
+          <option>Saturday Rental — $3,000</option>
+          <option>Venue + Decor Package (custom quote)</option>
+          <option>Not sure yet — help me choose</option>
+        </select>
+        <input type="text" name="hp" id="bf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;border:0;padding:0">
+        <button type="submit" class="bf-submit" id="bf-submit">Check My Date</button>
+        <p class="bf-msg" id="bf-msg" role="status"></p>
+      </form>
     </div>
   </div>
 </section>
@@ -394,6 +440,42 @@ const secs=document.querySelectorAll('section[id],header.hero');
 const nls=document.querySelectorAll('.side-nav ul a');
 const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){nls.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-40% 0px -50% 0px'});
 secs.forEach(s=>sio.observe(s));
+// booking form -> ghl-create-contact edge function (same pipeline as partyonbutler.com)
+const bf=document.getElementById('bookForm');
+bf.addEventListener('submit',async function(e){
+  e.preventDefault();
+  const msg=document.getElementById('bf-msg'),btn=document.getElementById('bf-submit');
+  if(!bf.reportValidity())return;
+  const full=document.getElementById('bf-name').value.trim();
+  const sp=full.lastIndexOf(' ');
+  const payload={
+    first_name:sp>0?full.slice(0,sp):full,
+    last_name:sp>0?full.slice(sp+1):'',
+    email:document.getElementById('bf-email').value.trim(),
+    phone:document.getElementById('bf-phone').value.trim(),
+    event_type:document.getElementById('bf-type').value,
+    event_date:document.getElementById('bf-date').value,
+    services:document.getElementById('bf-package').value,
+    form_type:'Event Space Booking Form',
+    source:'eventhub-booking-form',
+    hp:document.getElementById('bf-hp').value,
+    page_url:location.href,
+    referrer:document.referrer||'',
+    user_agent:navigator.userAgent
+  };
+  btn.disabled=true;btn.textContent='Sending…';msg.textContent='';
+  try{
+    const r=await fetch('https://klscglvwwzpqozihephe.supabase.co/functions/v1/ghl-create-contact',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    bf.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
+    btn.textContent='Sent ✓';
+    msg.textContent="Got it! We'll confirm your date shortly — usually within the hour during business hours.";
+  }catch(err){
+    btn.disabled=false;btn.textContent='Check My Date';
+    msg.textContent="Hmm, that didn't go through. Call (412) 871-6102 or email contact@partyonbutler.com and we'll get you booked.";
+  }
+});
 // gallery arrows
 const rail=document.querySelector('.rail');
 document.querySelector('.rail-prev').addEventListener('click',()=>rail.scrollBy({left:-rail.clientWidth*.8,behavior:'smooth'}));
