@@ -186,7 +186,8 @@ h2{font-size:clamp(34px,4.6vw,58px);margin-bottom:22px}
 .post-card img{aspect-ratio:16/10;object-fit:cover;border-bottom:3px solid var(--ink)}
 .post-card .pad{padding:20px 22px}
 .post-card .cat{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--fuchsia)}
-.post-card h3{font-family:var(--display);font-size:21px;text-transform:uppercase;line-height:1.1;margin:10px 0}
+.post-card h2, .post-card .pc-t{text-transform:uppercase}
+.post-card h2{font-family:var(--display);font-size:21px;text-transform:uppercase;line-height:1.1;margin:10px 0}
 .post-card p{font-size:14px;color:#4a4752}
 @media(max-width:900px){.blog-grid{grid-template-columns:1fr}}
 
@@ -215,7 +216,7 @@ footer{background:var(--ink);color:#bdb9c4;padding:60px 7vw 40px;font-family:var
 footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
 footer .brand{font-family:var(--display);font-size:28px;color:var(--white);text-transform:uppercase}
 footer .brand em{font-style:normal;color:var(--fuchsia)}
-footer h4{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+footer h3.fcol{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
 footer ul{list-style:none}
 footer li{margin-bottom:9px}
 footer a{color:#bdb9c4;text-decoration:none}
